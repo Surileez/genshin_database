@@ -1,0 +1,60 @@
+<html>
+  <style>
+    body{
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+<body>
+<h1>Users</h1>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>uid</th>
+                <th>user_name</th>
+                <th>character_name</th>
+                <th>character_element</th>
+                <th>character_rarity</th>
+                <th>character_level</th>
+                <th>friendliness</th>
+                <th>constellation</th>
+            </tr>
+            {%  for row in data %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+                <th>{{ row[5] }}</th>
+                <th>{{ row[6] }}</th>
+                <th>{{ row[7] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<form method="POST">
+<p>UID: <input type="text" name="uid"><br/>
+  User's name: <input type="text" name="uname"><br/>
+  Character's name: <input type="text" name="cname"><br/>
+  Character's rarity: <input type="checkbox" name="character_rarity" value="4">4
+  <input type="checkbox" name="character_rarity" value="5">5<br/>
+  Character's element: <input type="checkbox" name="elements" value="anemo">anemo
+  <input type="checkbox" name="elements" value="pyro">pyro
+  <input type="checkbox" name="elements" value="hydro">hydro
+  <input type="checkbox" name="elements" value="cryo">cryo
+  <input type="checkbox" name="elements" value="electro">electro
+  <input type="checkbox" name="elements" value="geo">geo<br/>
+  Character's level: <input type="text" name="clevel"><br/>
+  Character's friendship: <input type="text" name="friendship"><br/>
+  Character's constellation: <input type="text" name="constellation"><br/>
+  <input name="search" type="submit" value="search"></p>
+</form>
+
+<p><a href="search">Return search page</a></p>
+</body>
+
+
+</html>

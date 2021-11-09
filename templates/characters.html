@@ -1,0 +1,68 @@
+<html>
+  <style>
+    body{
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+<body>
+<h1>Characters</h1>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>name</th>
+                <th>element</th>
+                <th>rarity</th>
+                <th>weapon_type</th>
+                <th>birthday</th>
+                <th>base_hp</th>
+                <th>base_attack</th>
+                <th>base_defence</th>
+                <th>nationality</th>
+            </tr>
+            {%  for row in data %}
+            <tr>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+                <th>{{ row[5] }}</th>
+                <th>{{ row[6] }}</th>
+                <th>{{ row[7] }}</th>
+                <th>{{ row[8] }}</th>
+                <th>{{ row[11] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<form method="POST">
+<p>Name: <input type="text" name="cname"><br/>
+  Element: <input type="checkbox" name="elements" value="anemo">anemo
+  <input type="checkbox" name="elements" value="pyro">pyro
+  <input type="checkbox" name="elements" value="hydro">hydro
+  <input type="checkbox" name="elements" value="cryo">cryo
+  <input type="checkbox" name="elements" value="electro">electro
+  <input type="checkbox" name="elements" value="geo">geo<br/>
+  Weapon_type: <input type="checkbox" name="weapon_type" value="Bow">Bow
+  <input type="checkbox" name="weapon_type" value="Catalyst">Catalyst
+  <input type="checkbox" name="weapon_type" value="Claymore">Claymore
+  <input type="checkbox" name="weapon_type" value="Polearm">Polearm
+  <input type="checkbox" name="weapon_type" value="Sword">Sword<br/>
+  Rarity: <input type="checkbox" name="character_rarity" value="4">4
+  <input type="checkbox" name="character_rarity" value="5">5<br/>
+  Birthday: <input type="text" name="birthday"><br/>
+  Nation: <input type="checkbox" name="nid" value="None">None
+  <input type="checkbox" name="nid" value="Mondstadt">Mondstadt
+  <input type="checkbox" name="nid" value="Liyue">Liyue
+  <input type="checkbox" name="nid" value="Inazuma">Inazuma
+  <input type="checkbox" name="nid" value="Snezhnaya">Snezhnaya<br/><br/>
+  <input name="search" type="submit" value="search"></p>
+</form>
+
+<p><a href="search">Return search page</a></p>
+</body>
+
+
+</html>

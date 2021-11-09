@@ -1,0 +1,62 @@
+<html>
+  <style>
+    body{
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+<body>
+<h1>Weapons</h1>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>name</th>
+                <th>rarity</th>
+                <th>type</th>
+                <th>base_attack</th>
+                <th>extra_attribute</th>
+                <th>value</th>
+            </tr>
+            {%  for row in data %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+                <th>{{ row[6] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<form method="POST">
+<p>Name: <input type="text" name="wname"><br/>
+  Type: <input type="checkbox" name="weapon_type" value="bow">Bow
+  <input type="checkbox" name="weapon_type" value="catalyst">Catalyst
+  <input type="checkbox" name="weapon_type" value="claymore">Claymore
+  <input type="checkbox" name="weapon_type" value="polearm">Polearm
+  <input type="checkbox" name="weapon_type" value="sword">Sword<br/>
+  Rarity: <input type="checkbox" name="rarity" value="1">1
+    <input type="checkbox" name="rarity" value="2">2
+    <input type="checkbox" name="rarity" value="3">3
+    <input type="checkbox" name="rarity" value="4">4
+    <input type="checkbox" name="rarity" value="5">5<br/>
+  Extra_attribute: <input type="checkbox" name="extra_attribute" value="CRIT Rate">CRIT Rate
+    <input type="checkbox" name="extra_attribute" value="CRIT DMG">CRIT DMG
+    <input type="checkbox" name="extra_attribute" value="ATK">ATK
+    <input type="checkbox" name="extra_attribute" value="Physical DMG Bonus">Physical DMG Bonus<br/>
+    <input type="checkbox" name="extra_attribute" value="Elemental Mastery">Elemental Mastery
+    <input type="checkbox" name="extra_attribute" value="Energy Recharge">Energy Recharge
+    <input type="checkbox" name="extra_attribute" value="DEF">DEF
+    <input type="checkbox" name="extra_attribute" value="HP">HP
+    <input type="checkbox" name="extra_attribute" value="none">None<br/><br/>
+  <input name="search" type="submit" value="search"></p>
+</form>
+
+<p><a href="search">Return search page</a></p>
+</body>
+
+
+</html>

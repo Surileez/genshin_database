@@ -1,0 +1,81 @@
+<html>
+  <style>
+    body{
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+<body>
+<h2>Loc_materials</h2>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>name of materials</th>
+                <th>location</th>
+                <th>nation_name</th>
+                <th>materials_type</th>
+                <th>used by characters</th>
+            </tr>
+            {%  for row in data_l %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<h2>Talent_level_up_materials</h2>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>name of materials</th>
+                <th>location</th>
+                <th>nation_name</th>
+                <th>materials_type</th>
+                <th>open_day</th>
+                <th>used by characters</th>
+            </tr>
+            {%  for row in data_t %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+                <th>{{ row[5] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<form method="POST">
+<p>Name of materials: <input type="text" name="mname"> Name of characters: <input type="text" name="cname"><br/>
+  Location: <input type="text" name="location"> NOTE: make sure it matches with the official location name<br/>
+  Nation: <input type="checkbox" name="nid" value="None">None
+  <input type="checkbox" name="nid" value="Mondstadt">Mondstadt
+  <input type="checkbox" name="nid" value="Liyue">Liyue
+  <input type="checkbox" name="nid" value="Inazuma">Inazuma
+  <input type="checkbox" name="nid" value="Snezhnaya">Snezhnaya<br/>
+   Materials type: <input type="checkbox" name="type" value="Loc_materials">Loc_materials
+  <input type="checkbox" name="type" value="Talent_level_up_materials">Talent_level_up_materials<br/>
+   Open day of talent_level_up_materials: <input type="checkbox" name="open_day" value="1">Mon
+  <input type="checkbox" name="open_day" value="2">Tue
+    <input type="checkbox" name="open_day" value="3">Wed
+    <input type="checkbox" name="open_day" value="4">Thu
+    <input type="checkbox" name="open_day" value="5">Fri
+    <input type="checkbox" name="open_day" value="6">Sat
+    <input type="checkbox" name="open_day" value="7">Sun<br/>
+    NOTE: You will get materials whose domain open both on days you have chosen.<br/><br/>
+    <input name="search" type="submit" value="search"></p>
+</form>
+
+<p><a href="search">Return search page</a></p>
+</body>
+
+
+</html>

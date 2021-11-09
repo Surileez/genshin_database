@@ -1,0 +1,48 @@
+<html>
+  <style>
+    body{
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+<body>
+<h1>Users</h1>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>uid</th>
+                <th>name</th>
+                <th>level</th>
+                <th>activate_day</th>
+                <th>number_of_achievements</th>
+                <th>deep_spiral</th>
+            </tr>
+            {%  for row in data %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+                <th>{{ row[5] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<form method="POST">
+<p>UID: <input type="text" name="uid"><font color=#CE0000>{{wrongu}}<font color=#28004D><br/>
+  Name: <input type="text" name="uname"><br/>
+  Level: <input type="text" name="ulevel"><font color=#CE0000>{{wrongl}}<font color=#28004D><br/>
+  Activate day: <input type="text" name="activate_day"><font color=#CE0000>{{wrongd}}<font color=#28004D><br/>
+  Number of achievements: <input type="text" name="number_of_achievements"><font color=#CE0000>{{wronga}}<font color=#28004D><br/>
+  Deep spiral: <input type="text" name="deep_spiral"><br/>
+  <input name="search" type="submit" value="search"></p>
+</form>
+
+<p><a href="search">Return search page</a></p>
+</body>
+
+
+</html>
