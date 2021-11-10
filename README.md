@@ -6,9 +6,9 @@
  
  ### Original proposal :
  In part 1, we proposed that: using this application, visitors can not only find the basic information of the game but also the users, which is not common in other sites. They can check how many users have one specific character or who is the character that users owe most. Those parts have all been implemented in our application. </br>
-	The basic game-related information can be found on webpage Users: game players, Characters basic information, Weapons basic information, and Local materials and talent_level_up materials. For more information related to the user owning characters, Owning: users' characters page has that information.  </br>
-	The most interesting parts are on Other special requests page. On this page, visitors can see not only who are the popular characters that users owe most, but also who are top users who own most characters or have the highest average character level. Visitors can choose the criteria to get the top users and popular characters they want. For more specific descriptions, please check the special page part. </br>
-	In a word, we have implemented all features we proposed in part 1. </br>
+The basic game-related information can be found on webpage Users: game players, Characters basic information, Weapons basic information, and Local materials and talent_level_up materials. For more information related to the user owning characters, Owning: users' characters page has that information.  </br>
+The most interesting parts are on Other special requests page. On this page, visitors can see not only who are the popular characters that users owe most, but also who are top users who own most characters or have the highest average character level. Visitors can choose the criteria to get the top users and popular characters they want. For more specific descriptions, please check the special page part. </br>
+In a word, we have implemented all features we proposed in part 1. </br>
  
  ### Data sources:
  For basic game information, including characters, weapons, materials, nations, and so on, we collect information from the website https://genshin.honeyhunterworld.com/?lang=EN by request library in Python. After we receive the information from the website, we use Regular expressions to catch the information we need.  </br>
@@ -21,14 +21,7 @@
  NOTICE: For log in, please try UID:45, Name:MHY.(one user in our database)</br>
  After login in successfully, you will reach search page including different link of pages to do search. </br>
  NOTICE: Each page we will show 5 rows on the top, and you can know what you can search for and which format you should input. On each page except special requests page, if you input nothing and click search, you will get the whole table. If you input wrong type of text, we will notice you(for example: You must input integer).
- ##### Users: game players
- This page is information about game players, including uid, user_name, level, activate_day, number_of_achievements, deep_spiral.  
- ##### Owning: users' characters
- This page is for users to search users' owning characters, including uid, user_name, character_name, character_element, character_rarity, character_level, friendliness and constellation.
- ##### Characters basic information
- This page is for users to search basic information about characters, including name, element, rarity, weapon_type, birthday, base_attack, base_hp, base_defence and nation_name. 
- ##### Weapons basic information
- This page is for users to search basic information about weapons, including name, rarity, weapon_type, base_attack, extra_attribute and its value. 
+
  ##### Local materials and talent level up materials(Interesting web pages!)
  Description: This page is for users to search local materials and talent level up materials to find basic information about the materials such as location, name and open day, as well as level up information about materials used by characters. </br>
  It combines table Materials, Loc_materials, Talent_level_up_materials, Level_up, Nations, Characters in our database. Notice that open_day is the attribute only for talent_level_up materials in our database, because these materials can only be gained in domain having specific open days in a week, while local materials can just be picked up any time you want, also you can regard its open_day as from Mon to Sun. And we use type to clearly show users the kind of materials.</br>
@@ -49,8 +42,10 @@ If users do not input character's name, we will instead show all characters who 
  Group by Loc.mid,mname,location,nation_name,open_day 
  ```
  (...) will change according to your requirements.</br>
- Notice that we avoid SQL injection by always using format like 'column name'=%s, only %s is what we get from users' input. And we use some select boxes to let users select rather than input, it is both safe for our database as well as convenient for users.</br>
- 	Why do we think this page is interesting? :</br>
+ Notice that we avoid SQL injection by always using format like 'column name'=%s, only %s is what we get from users' input. And we use some select boxes to let users select rather than input, it is both safe for our database and convenient for users.</br>
+ 
+ Why do we think this page is interesting? :</br>
+ Because this page combines information of different kinds of materials and information about level up, it is covenient for users to quickly find which materials the character required as well as well and when to get those materials. Thus, users can level up their characters easily.
   
  
  ##### Other special requests(Interesting web pages!)
@@ -67,9 +62,17 @@ where O.uid=U.uid and O.cid=C.cid
 GROUP BY O.cid, cname, C.elements, C.character_rarity ORDER BY {} DESC".format(c_order)
 + " limit {}".format(num_row)
 ```
-	Why do we think this page is interesting? :</br>
+Why do we think this page is interesting? :</br>
  Because this page provides a unique way for visitors to see the users' and characters' ranking in their need ways. They can find which character is most loved by all other users and who is the player with the highest average character levels. Those things are hard to get from other normal game database websites. And that's what we hoped to achieve in part 1.
 
+ ##### Users: game players
+ This page is information about game players, including uid, user_name, level, activate_day, number_of_achievements, deep_spiral.  
+ ##### Owning: users' characters
+ This page is for users to search users' owning characters, including uid, user_name, character_name, character_element, character_rarity, character_level, friendliness and constellation.
+ ##### Characters basic information
+ This page is for users to search basic information about characters, including name, element, rarity, weapon_type, birthday, base_attack, base_hp, base_defence and nation_name. 
+ ##### Weapons basic information
+ This page is for users to search basic information about weapons, including name, rarity, weapon_type, base_attack, extra_attribute and its value. 
 
 
 
