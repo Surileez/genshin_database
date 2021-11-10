@@ -1,0 +1,86 @@
+<html>
+  <style>
+    body{
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+<body>
+<h2>Top Users</h2>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>uid</th>
+                <th>name</th>
+                <th>level</th>
+                <th>activate_day</th>
+                <th>number_of_achievements</th>
+                <th>owning_character_number</th>
+                <th>average_character_level</th>
+                <th>average_character_friendship</th>
+            </tr>
+            {%  for row in data_u %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+                <th>{{ row[5] }}</th>
+                <th>{{ row[6] }}</th>
+                <th>{{ row[7] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<h2>Popular Characters</h2>
+  <div>
+        <table border = "1px">
+            <tr style="background: #BCD2EE">
+                <th>name</th>
+                <th>element</th>
+                <th>rarity</th>
+                <th>number_of_user_owing</th>
+                <th>average_character_level</th>
+                <th>average_character_friendship</th>
+            </tr>
+            {%  for row in data_c %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+                <th>{{ row[3] }}</th>
+                <th>{{ row[4] }}</th>
+                <th>{{ row[5] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+  </div>
+
+<form method="POST">
+<p>
+    Order Target:<input type="checkbox" name="order" value="User">User
+    <input type="checkbox" name="order" value="Character">Character
+    <input type="checkbox" name="order" value="Both">Both<br/>
+    Order Type: <br/>
+    Users': <input type="checkbox" name="ulevel" value="ulevel"> User Level
+    <input type="checkbox" name="activate_day" value="activate_day"> Activate Day
+    <input type="checkbox" name="number_of_achievements" value="number_of_achievements"> Number of Achievements<br/>
+    For Both: <input type="checkbox" name="owning_number" value="owning_number"> Owning Number
+    <input type="checkbox" name="average_clevel" value="average_clevel"> Average Character Level
+    <input type="checkbox" name="average_friendship" value="average_friendship"> Average Character Friendship<br/>
+    NOTE: You can only choose one order type used for order the result<br/>
+    <font color=#CE0000>{{wrong}}</font><br/>
+    Number of rows to display(defualt is 5):<input type="checkbox" name="num_row" value="5">5
+    <input type="checkbox" name="num_row" value="10">10
+    <input type="checkbox" name="num_row" value="All">All<br/><br/>
+    <input name="search" type="submit" value="search"></p>
+</form>
+
+<p><a href="search">Return search page</a></p>
+</body>
+
+
+</html>
