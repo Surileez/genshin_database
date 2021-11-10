@@ -557,8 +557,12 @@ def special():
         num_rows = 10
       else:
         num_rows = 5
-      order_target = request.form.getlist('order')
+      order_target = request.form.get('order')
       print("order_target", order_target)
+      if order_target == None:
+        c1 = dict(data_u=[])
+        c2 = dict(data_c=[])
+        return render_template('special.html', **c1, **c2, wrong='Please choose one order target!')
       if 'Both' in order_target:
         order = 'All'
       elif 'User' in order_target:
@@ -567,34 +571,30 @@ def special():
         order = 'Character'
       print("order", order)
       order_type = []
-      ulevel = request.form.get('ulevel')
-      order_type.append(ulevel)
-      activate_day = request.form.get('activate_day')
-      order_type.append(activate_day)
-      number_of_achievements = request.form.get('number_of_achievements')
-      order_type.append(number_of_achievements)
-      owning_number = request.form.get('owning_number')
-      order_type.append(owning_number)
-      average_clevel = request.form.get('average_clevel')
-      order_type.append(average_clevel)
-      average_friendship = request.form.get('average_friendship')
-      order_type.append(average_friendship)
+      orderu = request.form.get('orderu')
+      order_type.append(orderu)
+      orderb = request.form.get('orderb')
+      order_type.append(orderb)
       submit = request.form.get('search')
       print("order_type", order_type)
-      cols_user = ['ulevel', 'activate_day', 'number_of_achievements']
       cols_char = ['owning_number', 'average_character_level', 'average_character_friendship']
       if submit == 'search':
-        if order == 'User':
-          cols = cols_user
-        elif order == 'Character':
-          cols = ['', '', '']+cols_char
-        else:
-          cols = cols_user + cols_char
+        if orderu == None and orderb == None:
+          c1=dict(data_u=[])
+          c2=dict(data_c=[])
+          return render_template('special.html', **c1, **c2, wrong='Please choose one order type!')
+        if (('Both' in order_target) or ('Character' in order_target)) and orderb == None:
+          c1 = dict(data_u=[])
+          c2 = dict(data_c=[])
+          return render_template('special.html', **c1, **c2, wrong='Please match order_target and order_type!')
+        if ('User' in order_target) and orderu == None:
+          c1 = dict(data_u=[])
+          c2 = dict(data_c=[])
+          return render_template('special.html', **c1, **c2, wrong='Please match order_target and order_type!')
         tmp = []
-        print('cols', cols)
-        for i in range(len(cols)):
-          if order_type[i] != '' and order_type[i] != None:
-            tmp.append(cols[i])
+        for col in order_type:
+          if col != None:
+            tmp.append(col)
         print("tmp", tmp)
         def get_two_order(order_type, order):
           if order_type == 'owning_number':
@@ -604,10 +604,7 @@ def special():
               return 'owning_character_number', 'cname'
             else:
               return 'O.uid', 'number_of_user_owing'
-        if len(tmp) > 1:
-          c1, c2 = type_get(u_order='O.uid', c_order='cname')
-          return render_template('special.html', **c1, **c2, wrong='Please ONLY choose one order type!')
-        elif len(tmp) == 1:
+        if len(tmp) == 1:
           if order == 'All':
             if tmp[0] in cols_char:
               if tmp[0] == 'owning_number':
@@ -636,7 +633,6 @@ def special():
           context_1, context_2 = type_get(u_order='O.uid', c_order='cname', num_row=num_rows)
         return render_template('special.html', **context_1, **context_2)
 
-    #return render_template('special.html')
 
 def this_is_never_executed():
   print('***')
