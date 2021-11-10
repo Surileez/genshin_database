@@ -266,7 +266,7 @@ def users():
     if submit == 'search':
       if not (inuid.isdigit() or inuid == ''):
         context = dict(data=[])
-        return render_template('users.html', **context, wrongu='must input integer')
+        return render_template('users.html', wrongu='must input integer', **context)
       if not (inulevel.isdigit() or inulevel==''):
         context = dict(data=[])
         return render_template('users.html', **context, wrongl='must input integer')
