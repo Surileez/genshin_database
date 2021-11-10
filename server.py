@@ -591,6 +591,10 @@ def special():
           c1 = dict(data_u=[])
           c2 = dict(data_c=[])
           return render_template('special.html', **c1, **c2, wrong='Please match order_target and order_type!')
+        if orderu != None and order == 'All':
+          c1 = dict(data_u=[])
+          c2 = dict(data_c=[])
+          return render_template('special.html', **c1, **c2, wrong='Please match order_target and order_type!')
         tmp = []
         for col in order_type:
           if col != None:
