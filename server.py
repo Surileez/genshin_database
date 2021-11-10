@@ -269,13 +269,13 @@ def users():
         return render_template('users.html', wrongu='must input integer', **context)
       if not (inulevel.isdigit() or inulevel==''):
         context = dict(data=[])
-        return render_template('users.html', **context, wrongl='must input integer')
+        return render_template('users.html', wrongl='must input integer', **context)
       if not (inday.isdigit() or inday==''):
         context = dict(data=[])
-        return render_template('users.html', **context, wrongd='must input integer')
+        return render_template('users.html', wrongd='must input integer', **context)
       if not (inachievements.isdigit() or inachievements == ''):
         context = dict(data=[])
-        return render_template('users.html', **context, wronga='must input integer')
+        return render_template('users.html', wronga='must input integer', **context)
       else:
         cols = ['uid','uname', 'ulevel', 'activate_day', 'number_of_achievements','deep_spiral']
         dic = {}
@@ -334,16 +334,16 @@ def owning():
     if submit == 'search':
       if not (inuid.isdigit() or inuid == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context, wrongu='must input integer')
+        return render_template('owning.html', wrongu='must input integer', **context)
       if not (inclevel.isdigit() or inclevel == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context, wrongl='must input integer')
+        return render_template('owning.html', wrongl='must input integer', **context)
       if not (infrd.isdigit() or infrd == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context, wrongf='must input integer')
+        return render_template('owning.html', wrongf='must input integer', **context)
       if not (incon.isdigit() or incon == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context, wrongc='must input integer')
+        return render_template('owning.html', wrongc='must input integer', **context)
       else:
         cols = ['O.uid', 'uname', 'cname', 'elements', 'character_rarity', 'clevel', 'friendship', 'constellation']
         dic = {}
@@ -582,19 +582,19 @@ def special():
         if orderu == None and orderb == None:
           c1=dict(data_u=[])
           c2=dict(data_c=[])
-          return render_template('special.html', **c1, **c2, wrong='Please choose one order type!')
+          return render_template('special.html', wrongc='must input integer', **c1, **c2)
         if (('Both' in order_target) or ('Character' in order_target)) and orderb == None:
           c1 = dict(data_u=[])
           c2 = dict(data_c=[])
-          return render_template('special.html', **c1, **c2, wrong='Please match order_target and order_type!')
+          return render_template('special.html', wrong='Please match order_target and order_type!',**c1, **c2)
         if ('User' in order_target) and orderu == None:
           c1 = dict(data_u=[])
           c2 = dict(data_c=[])
-          return render_template('special.html', **c1, **c2, wrong='Please match order_target and order_type!')
+          return render_template('special.html', wrong='Please match order_target and order_type!', **c1, **c2)
         if orderu != None and order == 'All':
           c1 = dict(data_u=[])
           c2 = dict(data_c=[])
-          return render_template('special.html', **c1, **c2, wrong='Please match order_target and order_type!')
+          return render_template('special.html', wrong='Please match order_target and order_type!', **c1, **c2)
         tmp = []
         for col in order_type:
           if col != None:
