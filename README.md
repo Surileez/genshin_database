@@ -15,7 +15,7 @@ In a word, we have implemented all features we proposed in part 1. </br>
 	For user information, we used a script from https://github.com/babalae/genshin-info to collect. It can get user information by searching user id. However, the result is in image format so we used Tencent OCR to get the text from images. After collecting text information, we transform them into CSV files and insert commands to add data into the database.  </br>
 	Now all the characters, weapons, materials related information is in our database. For the user information, we only got 60 users. Because the OCR took a lot of time to process and there may be some fault in recognizing text so we have to double-check the result. It took us quite a lot of time. As a result, we decided to use 60 users' information first. The code for collecting and processing data is in the folder data processing. </br>
  
- ### How to use:
+ ### Web pages and how to use:
  ##### Login in:
  This application only allows users in our database to login in. If you don't type UID and name completely or you input wrong type of UID(must be integer) or the UID and name do not match our database, you will get a message to notice that you have made something wrong. </br>
  NOTICE: For log in, please try UID:45, Name:MHY.(one user in our database)</br>
