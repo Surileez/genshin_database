@@ -16,10 +16,23 @@
  ##### Login in:
  This application only allows users in our database to login in. If you don't type UID and name completely or you input wrong type of UID(must be integer) or the UID and name do not match our database, you will get a message to notice that you have made something wrong. </br>
  NOTICE: For log in, please try UID:45, Name:MHY.(one user in our database)</br>
- After login in successfully, you will reach search page including different link of pages to do search. Each page we will show 5 rows on the top, and you can know what you can search for and which format you should input.</br>
- NOTICE: Every page, if you input nothing and click search, we will show you all. If you input wrong type of text, we will notice you.
- #### Users:
- This page is information about game players, including uid, uname, level, activate_day, number_of_achievements, deep_spiral.  
- ##### Characters:
+ After login in successfully, you will reach search page including different link of pages to do search. </br>
+ NOTICE: Each page we will show 5 rows on the top, and you can know what you can search for and which format you should input. On each page except special requests page, if you input nothing and click search, you will get the whole table. If you input wrong type of text, we will notice you(for example: You must input integer).
+ #### Users: game players
+ This page is information about game players, including uid, user_name, level, activate_day, number_of_achievements, deep_spiral.  
+ #### Owning: users' characters
+ This page is for users to search users' owning characters, including uid, user_name, character_name, character_element, character_rarity, character_level, friendliness and constellation.
+ ##### Characters basic information
  This page is for users to search basic information about characters, including name, element, rarity, weapon_type, birthday, base_attack, base_hp, base_defence and nation_name. 
- ##### 
+ ##### Weapons basic information
+ This page is for users to search basic information about weapons, including name, rarity, weapon_type, base_attack, extra_attribute and its value. 
+ ##### Local materials and talent level up materials(Interesting web pages!)
+ Description: This page is for users to search local materials and talent level up materials to find basic information about the materials such as location, name and open day, as well as level up information about materials used by characters. </br>
+ It combines table Materials, Loc_materials, Talent_level_up_materials, Level_up, Nations, Characters in our database.  </br>
+ 
+ ```
+ SELECT mname,location,nation_name,'Talent_level_up_materials' AS type,open_day, string_agg(cname,',') AS used_by_characters
+ from Materials M, Nations N, Locate L,Talent_level_up_materials Loc,Characters C, Level_up U 
+ where N.nid=L.nid and Loc.mid=M.mid and Loc.mid=L.mid and C.cid=U.cid and Loc.mid=U.mid and(...)
+ Group by Loc.mid,mname,location,nation_name,open_day 
+ ```
