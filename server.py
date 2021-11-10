@@ -317,47 +317,65 @@ def owning():
     return render_template("owning.html", **context)
   else:
     getcol = []
-    getcol.append(request.form.get('uid'))
+    inuid = request.form.get('uid')
+    #getcol.append(request.form.get('uid'))
+    getcol.append(inuid)
     getcol.append(request.form.get('uname'))
     getcol.append(request.form.get('cname'))
     getcol.append(request.form.getlist('elements'))
     getcol.append(request.form.getlist('character_rarity'))
-    getcol.append(request.form.get('clevel'))
-    getcol.append(request.form.get('friendship'))
-    getcol.append(request.form.get('constellation'))
+    inclevel = request.form.get('clevel')
+    getcol.append(inclevel)
+    infrd = request.form.get('friendship')
+    getcol.append(infrd)
+    incon = request.form.get('constellation')
+    getcol.append(incon)
     submit = request.form.get('search')
     if submit == 'search':
-      cols = ['O.uid', 'uname', 'cname', 'elements','character_rarity','clevel', 'friendship', 'constellation']
-      dic = {}
-      i = 1
-      for col in cols:
-        if getcol[i - 1] != '' and getcol[i - 1] != []:
-          dic[col] = getcol[i - 1]
-        i += 1
-      sql = 'SELECT O.uid,uname,cname,elements,character_rarity,clevel,friendship,constellation'\
-            +' from Owning O, Users U, Characters C where O.uid=U.uid and O.cid=C.cid'
-      if len(dic) > 0:
-        sql = sql + ' and '
-      data = []
-      para = []
-      for col in dic:
-        if (col == 'elements' or col == 'character_rarity'):
-          part = []
-          for n in dic[col]:
-            part.append(col + '=' + '%s')
-            para.append(n)
-          data.append('(' + ' or '.join(part) + ')')
-        else:
-          data.append(col + '=' + '%s')
-          para.append(dic[col])
-      sql = sql + ' and '.join(data)
-      cursor = g.conn.execute(sql, para)
-      users = []
-      for result in cursor:
-        users.append(result)
-      context = dict(data=users)
-      cursor.close()
-      return render_template('owning.html', **context)
+      if not (inuid.isdigit() or inuid == ''):
+        context = dict(data=[])
+        return render_template('owning.html', **context,wrongu='must input integer')
+      if not (inclevel.isdigit() or inclevel == ''):
+        context = dict(data=[])
+        return render_template('owning.html', **context,wrongl='must input integer')
+      if not (infrd.isdigit() or infrd == ''):
+        context = dict(data=[])
+        return render_template('owning.html', **context,wrongf='must input integer')
+      if not (incon.isdigit() or incon == ''):
+        context = dict(data=[])
+        return render_template('owning.html', **context,wrongc='must input integer')
+      else:
+        cols = ['O.uid', 'uname', 'cname', 'elements','character_rarity','clevel', 'friendship', 'constellation']
+        dic = {}
+        i = 1
+        for col in cols:
+          if getcol[i - 1] != '' and getcol[i - 1] != []:
+            dic[col] = getcol[i - 1]
+          i += 1
+        sql = 'SELECT O.uid,uname,cname,elements,character_rarity,clevel,friendship,constellation'\
+              +' from Owning O, Users U, Characters C where O.uid=U.uid and O.cid=C.cid'
+        if len(dic) > 0:
+          sql = sql + ' and '
+        data = []
+        para = []
+        for col in dic:
+          if (col == 'elements' or col == 'character_rarity'):
+            part = []
+            for n in dic[col]:
+              part.append(col + '=' + '%s')
+              para.append(n)
+            data.append('(' + ' or '.join(part) + ')')
+          else:
+            data.append(col + '=' + '%s')
+            para.append(dic[col])
+        sql = sql + ' and '.join(data)
+        cursor = g.conn.execute(sql, para)
+        users = []
+        for result in cursor:
+          users.append(result)
+        context = dict(data=users)
+        cursor.close()
+        return render_template('owning.html', **context)
 
 @app.route('/materials',methods=['GET', 'POST'])
 def materials():
@@ -392,7 +410,7 @@ def materials():
     getcol = []
     getcol.append(request.form.get('mname'))
     getcol.append(request.form.get('location'))
-    getcol.append(request.form.getlist('nation_name'))
+    getcol.append(request.form.getlist('nid'))
     intype = request.form.getlist('type')
     days=request.form.getlist('open_day')
     getcol.append(days)
@@ -498,7 +516,127 @@ def materials():
 
 @app.route('/special',methods=['GET', 'POST'])
 def special():
-      return render_template('special.html')
+    def type_get(u_order, c_order, num_row=5):
+      sql_1 = "SELECT O.uid, uname, ulevel, activate_day, number_of_achievements, COUNT(*) AS owning_character_number, " \
+              "AVG(O.clevel) AS average_character_level, AVG(O.friendship) AS average_character_friendship "+\
+              "from Owning O, Users U, Characters C where O.uid=U.uid and O.cid=C.cid " \
+              "GROUP BY O.uid, uname, ulevel, activate_day, number_of_achievements" \
+              +" ORDER BY {} DESC".format(u_order)
+      if num_row != 'All':
+        sql_1 += " limit {}".format(num_row)
+      cursor_u = g.conn.execute(sql_1)
+      users = []
+      for result in cursor_u:
+        users.append(result)  # can also be accessed using result
+      context_1 = dict(data_u=users)
+      cursor_u.close()
+      sql_2 = "SELECT cname, C.elements, C.character_rarity, COUNT(*) AS number_of_user_owing, " \
+              " AVG(O.clevel) AS average_character_level, AVG(O.friendship) AS average_character_friendship " + \
+              "from Owning O, Users U, Characters C where O.uid=U.uid and O.cid=C.cid " \
+              "GROUP BY O.cid, cname, C.elements, C.character_rarity" \
+              + " ORDER BY {} DESC".format(c_order)
+      if num_row != 'All':
+        sql_2 += " limit {}".format(num_row)
+      cursor_c = g.conn.execute(sql_2)
+      characters = []
+      for result in cursor_c:
+        characters.append(result)  # can also be accessed using result
+      context_2 = dict(data_c=characters)
+      cursor_u.close()
+      return context_1, context_2
+
+    if request.method == 'GET':
+      context_1, context_2 = type_get(u_order='O.uid', c_order='cname')
+      return render_template('special.html', **context_1, **context_2)
+    else:
+      number_rows = request.form.getlist('num_row')
+      print("number_rows", number_rows)
+      if 'All' in number_rows:
+        num_rows = 'All'
+      elif '10' in number_rows:
+        num_rows = 10
+      else:
+        num_rows = 5
+      order_target = request.form.getlist('order')
+      print("order_target", order_target)
+      if 'Both' in order_target:
+        order = 'All'
+      elif 'User' in order_target:
+        order = 'User'
+      else:
+        order = 'Character'
+      print("order", order)
+      order_type = []
+      ulevel = request.form.get('ulevel')
+      order_type.append(ulevel)
+      activate_day = request.form.get('activate_day')
+      order_type.append(activate_day)
+      number_of_achievements = request.form.get('number_of_achievements')
+      order_type.append(number_of_achievements)
+      owning_number = request.form.get('owning_number')
+      order_type.append(owning_number)
+      average_clevel = request.form.get('average_clevel')
+      order_type.append(average_clevel)
+      average_friendship = request.form.get('average_friendship')
+      order_type.append(average_friendship)
+      submit = request.form.get('search')
+      print("order_type", order_type)
+      cols_user = ['ulevel', 'activate_day', 'number_of_achievements']
+      cols_char = ['owning_number', 'average_character_level', 'average_character_friendship']
+      if submit == 'search':
+        if order == 'User':
+          cols = cols_user
+        elif order == 'Character':
+          cols = ['', '', '']+cols_char
+        else:
+          cols = cols_user + cols_char
+        tmp = []
+        print('cols', cols)
+        for i in range(len(cols)):
+          if order_type[i] != '' and order_type[i] != None:
+            tmp.append(cols[i])
+        print("tmp", tmp)
+        def get_two_order(order_type, order):
+          if order_type == 'owning_number':
+            if order == 'All':
+              return 'owning_character_number', 'number_of_user_owing'
+            elif order == 'User':
+              return 'owning_character_number', 'cname'
+            else:
+              return 'O.uid', 'number_of_user_owing'
+        if len(tmp) > 1:
+          c1, c2 = type_get(u_order='O.uid', c_order='cname')
+          return render_template('special.html', **c1, **c2, wrong='Please ONLY choose one order type!')
+        elif len(tmp) == 1:
+          if order == 'All':
+            if tmp[0] in cols_char:
+              if tmp[0] == 'owning_number':
+                u_order, c_order = get_two_order(tmp[0], order)
+              else:
+                u_order, c_order = tmp[0], tmp[0]
+              context_1, context_2 = type_get(u_order=u_order, c_order=c_order, num_row=num_rows)
+            else:
+              context_1, context_2 = type_get(u_order=tmp[0], c_order='cname', num_row=num_rows)
+          elif order == 'User':
+            if tmp[0] == 'owning_number':
+              u_order, c_order = get_two_order(tmp[0], order)
+            else:
+              u_order, c_order = tmp[0], 'cname'
+            context_1, context_2 = type_get(u_order=u_order, c_order=c_order, num_row=num_rows)
+          else:
+            if tmp[0] in cols_char:
+              if tmp[0] == 'owning_number':
+                u_order, c_order = get_two_order(tmp[0], order)
+              else:
+                u_order, c_order = 'O.uid', tmp[0]
+              context_1, context_2 = type_get(u_order=u_order, c_order=c_order, num_row=num_rows)
+            else:
+              context_1, context_2 = type_get(u_order='O.uid', c_order='cname', num_row=num_rows)
+        else:
+          context_1, context_2 = type_get(u_order='O.uid', c_order='cname', num_row=num_rows)
+        return render_template('special.html', **context_1, **context_2)
+
+    #return render_template('special.html')
 
 def this_is_never_executed():
   print('***')
