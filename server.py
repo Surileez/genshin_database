@@ -264,18 +264,18 @@ def users():
     getcol.append(request.form.get('deep_spiral'))
     submit = request.form.get('search')
     if submit == 'search':
-      if not (inuid.isdigit() or inuid==''):
+      if not (inuid.isdigit() or inuid == ''):
         context = dict(data=[])
-        return render_template('users.html', **context,wrongu='must input integer')
+        return render_template('users.html', **context, wrongu='must input integer')
       if not (inulevel.isdigit() or inulevel==''):
         context = dict(data=[])
-        return render_template('users.html', **context,wrongl='must input integer')
+        return render_template('users.html', **context, wrongl='must input integer')
       if not (inday.isdigit() or inday==''):
         context = dict(data=[])
-        return render_template('users.html', **context,wrongd='must input integer')
-      if not (inachievements.isdigit() or inachievements==''):
+        return render_template('users.html', **context, wrongd='must input integer')
+      if not (inachievements.isdigit() or inachievements == ''):
         context = dict(data=[])
-        return render_template('users.html', **context,wronga='must input integer')
+        return render_template('users.html', **context, wronga='must input integer')
       else:
         cols = ['uid','uname', 'ulevel', 'activate_day', 'number_of_achievements','deep_spiral']
         dic = {}
@@ -334,18 +334,18 @@ def owning():
     if submit == 'search':
       if not (inuid.isdigit() or inuid == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context,wrongu='must input integer')
+        return render_template('owning.html', **context, wrongu='must input integer')
       if not (inclevel.isdigit() or inclevel == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context,wrongl='must input integer')
+        return render_template('owning.html', **context, wrongl='must input integer')
       if not (infrd.isdigit() or infrd == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context,wrongf='must input integer')
+        return render_template('owning.html', **context, wrongf='must input integer')
       if not (incon.isdigit() or incon == ''):
         context = dict(data=[])
-        return render_template('owning.html', **context,wrongc='must input integer')
+        return render_template('owning.html', **context, wrongc='must input integer')
       else:
-        cols = ['O.uid', 'uname', 'cname', 'elements','character_rarity','clevel', 'friendship', 'constellation']
+        cols = ['O.uid', 'uname', 'cname', 'elements', 'character_rarity', 'clevel', 'friendship', 'constellation']
         dic = {}
         i = 1
         for col in cols:
@@ -405,7 +405,7 @@ def materials():
       characters.append(result)
     context_t= dict(data_t=characters)
     cursor.close()
-    return render_template("materials.html", **context_l,**context_t)
+    return render_template("materials.html", **context_l, **context_t)
   else:
     getcol = []
     getcol.append(request.form.get('mname'))
@@ -417,7 +417,7 @@ def materials():
     getcol.append(request.form.get('cname'))
     submit = request.form.get('search')
     if submit == 'search':
-      cols = ['mname','location','nation_name', 'open_day','cname']
+      cols = ['mname', 'location', 'nation_name', 'open_day', 'cname']
       dic = {}
       i = 1
       for col in cols:
@@ -512,7 +512,7 @@ def materials():
         cursor2.close()
       if (intype != []) and ('Talent_level_up_materials' not in intype):
         context_t = dict(data_t=[])
-      return render_template('materials.html', **context_l,**context_t)
+      return render_template('materials.html', **context_l, **context_t)
 
 @app.route('/special',methods=['GET', 'POST'])
 def special():
