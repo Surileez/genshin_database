@@ -622,6 +622,7 @@ def special():
             else:
               u_order, c_order = tmp[0], 'cname'
             context_1, context_2 = type_get(u_order=u_order, c_order=c_order, num_row=num_rows)
+            context_2 =[]
           else:
             if tmp[0] in cols_char:
               if tmp[0] == 'owning_number':
@@ -631,6 +632,7 @@ def special():
               context_1, context_2 = type_get(u_order=u_order, c_order=c_order, num_row=num_rows)
             else:
               context_1, context_2 = type_get(u_order='O.uid', c_order='cname', num_row=num_rows)
+            context_1=[]
         else:
           context_1, context_2 = type_get(u_order='O.uid', c_order='cname', num_row=num_rows)
         return render_template('special.html', data_u=context_1, data_c=context_2)
