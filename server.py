@@ -117,6 +117,9 @@ def index():
         return render_template('index.html', Login_image=full_filename, wrong='Please input both uid and uname')
       if not uid.isdigit():
         return render_template('index.html', Login_image=full_filename, wrong='UID must be integer')
+      if len(uid) > 5:
+        wrongdigit = 'The input number has to be smaller than 99999'
+        return render_template('index.html', wrong=wrongdigit, Login_image=full_filename)
       cursor = g.conn.execute("SELECT * from Users where uid=%s and uname=%s", (uid, uname))
       check = cursor.fetchall()
       cursor.close()
@@ -263,6 +266,7 @@ def users():
     getcol.append(inachievements)
     getcol.append(request.form.get('deep_spiral'))
     submit = request.form.get('search')
+    ints = [len(inuid), len(inulevel), len(inday), len(inachievements)]
     if submit == 'search':
       if not (inuid.isdigit() or inuid == ''):
         context = dict(data=[])
@@ -276,6 +280,9 @@ def users():
       if not (inachievements.isdigit() or inachievements == ''):
         context = dict(data=[])
         return render_template('users.html', wronga='must input integer', **context)
+      if max(ints) > 5:
+        wrongdigit = 'The input number has to be smaller than 99999'
+        return render_template('users.html', wrongdigit=wrongdigit, data=[])
       else:
         cols = ['uid','uname', 'ulevel', 'activate_day', 'number_of_achievements','deep_spiral']
         dic = {}
@@ -318,7 +325,6 @@ def owning():
   else:
     getcol = []
     inuid = request.form.get('uid')
-    #getcol.append(request.form.get('uid'))
     getcol.append(inuid)
     getcol.append(request.form.get('uname'))
     getcol.append(request.form.get('cname'))
@@ -331,6 +337,7 @@ def owning():
     incon = request.form.get('constellation')
     getcol.append(incon)
     submit = request.form.get('search')
+    ints = [len(inuid), len(inclevel), len(infrd), len(incon)]
     if submit == 'search':
       if not (inuid.isdigit() or inuid == ''):
         context = dict(data=[])
@@ -344,6 +351,9 @@ def owning():
       if not (incon.isdigit() or incon == ''):
         context = dict(data=[])
         return render_template('owning.html', wrongc='must input integer', **context)
+      if max(ints) > 5:
+        wrongdigit = 'The input number has to be smaller than 99999'
+        return render_template('owning.html', wrongdigit=wrongdigit, data=[])
       else:
         cols = ['O.uid', 'uname', 'cname', 'elements', 'character_rarity', 'clevel', 'friendship', 'constellation']
         dic = {}
