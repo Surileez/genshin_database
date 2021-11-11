@@ -566,7 +566,6 @@ def special():
       else:
         num_rows = 5
       order_target = request.form.get('order')
-      print("order_target", order_target)
       if order_target == None:
         c1 = []
         c2 = []
@@ -577,14 +576,12 @@ def special():
         order = 'User'
       else:
         order = 'Character'
-      print("order", order)
       order_type = []
       orderu = request.form.get('orderu')
       order_type.append(orderu)
       orderb = request.form.get('orderb')
       order_type.append(orderb)
       submit = request.form.get('search')
-      print("order_type", order_type)
       cols_char = ['owning_number', 'average_character_level', 'average_character_friendship']
       if submit == 'search':
         if orderu == None and orderb == None:
@@ -607,7 +604,6 @@ def special():
         for col in order_type:
           if col != None:
             tmp.append(col)
-        print("tmp", tmp)
         def get_two_order(order_type, order):
           if order_type == 'owning_number':
             if order == 'All':
