@@ -281,7 +281,7 @@ def users():
         context = dict(data=[])
         return render_template('users.html', wronga='must input integer', **context)
       if max(ints) > 5:
-        wrongdigit = 'The input number has to be smaller than 99999'
+        wrongdigit = "The input number's length has to be smaller than 6"
         return render_template('users.html', wrongdigit=wrongdigit, data=[])
       else:
         cols = ['uid','uname', 'ulevel', 'activate_day', 'number_of_achievements','deep_spiral']
@@ -352,7 +352,7 @@ def owning():
         context = dict(data=[])
         return render_template('owning.html', wrongc='must input integer', **context)
       if max(ints) > 5:
-        wrongdigit = 'The input number has to be smaller than 99999'
+        wrongdigit = "The input number's length has to be smaller than 6"
         return render_template('owning.html', wrongdigit=wrongdigit, data=[])
       else:
         cols = ['O.uid', 'uname', 'cname', 'elements', 'character_rarity', 'clevel', 'friendship', 'constellation']
@@ -584,18 +584,22 @@ def special():
       submit = request.form.get('search')
       cols_char = ['owning_number', 'average_character_level', 'average_character_friendship']
       if submit == 'search':
+        if orderu != None and orderb!= None:
+          c1, c2 = [], []
+          return render_template('special.html', wrong='Please match order_target and order_type '
+                                                       'and only choose one order_type!', data_u=c1, data_c=c2)
         if orderu == None and orderb == None:
           c1 = []
           c2 = []
-          return render_template('special.html', wrongc='must input integer', data_u=c1, data_c=c2)
+          return render_template('special.html', wrong='Please at least choose one order_target', data_u=c1, data_c=c2)
         if (('Both' in order_target) or ('Character' in order_target)) and orderb == None:
           c1 = []
           c2 = []
           return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)
-        if ('User' in order_target) and orderu == None:
+        '''if ('User' in order_target) and orderu == None:
           c1 = []
           c2 = []
-          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)
+          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)'''
         if orderu != None and order == 'All':
           c1 = []
           c2 = []
