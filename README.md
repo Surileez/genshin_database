@@ -48,7 +48,7 @@ If users do not input character's name, we will instead show all characters who 
  Because this page combines information of different kinds of materials and information about level up, it is covenient for users to quickly find which materials the character required as well as well and when to get those materials. Thus, users can level up their characters easily.
   
  
- ##### Other special requests(Interesting web pages!)
+ ##### Other special requests：(Interesting web pages!)
  Description: On the special search page, users can see top users and popular characters ordered by their needs. The order types unique for users include User Level, Activate Day, Number of Achievements. For both users and characters, types include Owning Number, Average Character Level, Average Character Friendship.  </br>
 	Users can choose what they want to see, how to order the result, and the number of rows by clicking corresponding checkboxes. After choosing what he or she needs, click the search bottom and the application will show the result. </br>
 	In our application, the user must choose to see the top users, popular characters, and both of them by choosing the bottom in Order Target. We only accept one order type used to order the result. If we receive more than one, we will show an alert to ask the user to choose only one. </br>
