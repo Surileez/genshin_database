@@ -2,7 +2,7 @@
  ==================================================
  ### By: Siyu Li(sl4826), Zhibo Dai(zd2263)
  ### PostgreSQL account: zd2263
- ### url: 
+ ### url: http://34.75.164.72:8111/
  
  ### Original proposal :
  In part 1, we proposed that: using this application, visitors can not only find the basic information of the game but also the users, which is not common in other sites. They can check how many users have one specific character or who is the character that users owe most. Those parts have all been implemented in our application. </br>
