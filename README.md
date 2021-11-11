@@ -41,7 +41,7 @@ If users do not input character's name, we will instead show all characters who 
  where N.nid=L.nid and Loc.mid=M.mid and Loc.mid=L.mid and C.cid=U.cid and Loc.mid=U.mid (...)
  Group by Loc.mid,mname,location,nation_name,open_day 
  ```
- (...) will change according to your requirements.</br>
+ You can also do multiple search, and (...) will change according to your requirements.</br>
  Notice that we avoid SQL injection by always using format like 'column name'=%s, only %s is what we get from users' input. And we use some select boxes to let users select rather than input, it is both safe for our database and convenient for users.</br>
  
  Why do we think this page is interesting? :</br>
