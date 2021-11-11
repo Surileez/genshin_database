@@ -391,7 +391,6 @@ def materials():
     characters = []
     for result in cursor:
       characters.append(result)
-    context_l = dict(data_l=characters)
     cursor.close()
     sql = "SELECT mname,location,nation_name,'Talent_level_up_materials' AS type,open_day "+\
       ",string_agg(cname,',') AS used_by_characters "+\
@@ -400,12 +399,11 @@ def materials():
         "Group by Loc.mid,mname,location,nation_name,open_day "+\
         "limit 5"
     cursor = g.conn.execute(sql)
-    characters = []
+    characters2 = []
     for result in cursor:
-      characters.append(result)
-    context_t= dict(data_t=characters)
+      characters2.append(result)
     cursor.close()
-    return render_template("materials.html", **context_l, **context_t)
+    return render_template("materials.html", data_l=characters, data_t=characters2)
   else:
     getcol = []
     getcol.append(request.form.get('mname'))
@@ -456,10 +454,10 @@ def materials():
         Loc = []
         for result in cursor1:
           Loc.append(result)
-        context_l = dict(data_l=Loc)
+        context_l = Loc
         cursor1.close()
       if (intype != []) and ('Loc_materials' not in intype):
-        context_l = dict(data_l=[])
+        context_l = []
       if (intype == []) or ('Talent_level_up_materials' in intype):
         if 'cname' not in dic:
           sql2 = "SELECT mname,location,nation_name,'Talent_level_up_materials' AS type,open_day " + \
@@ -508,11 +506,11 @@ def materials():
         Talent= []
         for result in cursor2:
           Talent.append(result)
-        context_t = dict(data_t=Talent)
+        context_t = Talent
         cursor2.close()
       if (intype != []) and ('Talent_level_up_materials' not in intype):
-        context_t = dict(data_t=[])
-      return render_template('materials.html', **context_l, **context_t)
+        context_t = []
+      return render_template('materials.html', data_l=context_l, data_t=context_t)
 
 @app.route('/special',methods=['GET', 'POST'])
 def special():
@@ -528,7 +526,7 @@ def special():
       users = []
       for result in cursor_u:
         users.append(result)  # can also be accessed using result
-      context_1 = dict(data_u=users)
+      context_1 = users
       cursor_u.close()
       sql_2 = "SELECT cname, C.elements, C.character_rarity, COUNT(*) AS number_of_user_owing, " \
               " AVG(O.clevel) AS average_character_level, AVG(O.friendship) AS average_character_friendship " + \
@@ -541,13 +539,13 @@ def special():
       characters = []
       for result in cursor_c:
         characters.append(result)  # can also be accessed using result
-      context_2 = dict(data_c=characters)
+      context_2 = characters
       cursor_u.close()
       return context_1, context_2
 
     if request.method == 'GET':
       context_1, context_2 = type_get(u_order='O.uid', c_order='cname')
-      return render_template('special.html', **context_1, **context_2)
+      return render_template('special.html', data_u=context_1, data_c=context_2)
     else:
       number_rows = request.form.getlist('num_row')
       print("number_rows", number_rows)
@@ -560,9 +558,9 @@ def special():
       order_target = request.form.get('order')
       print("order_target", order_target)
       if order_target == None:
-        c1 = dict(data_u=[])
-        c2 = dict(data_c=[])
-        return render_template('special.html', **c1, **c2, wrong='Please choose one order target!')
+        c1 = []
+        c2 = []
+        return render_template('special.html', data_u=c1, data_c=c2, wrong='Please choose one order target!')
       if 'Both' in order_target:
         order = 'All'
       elif 'User' in order_target:
@@ -580,21 +578,21 @@ def special():
       cols_char = ['owning_number', 'average_character_level', 'average_character_friendship']
       if submit == 'search':
         if orderu == None and orderb == None:
-          c1=dict(data_u=[])
-          c2=dict(data_c=[])
-          return render_template('special.html', wrongc='must input integer', **c1, **c2)
+          c1 = []
+          c2 = []
+          return render_template('special.html', wrongc='must input integer', data_u=c1, data_c=c2)
         if (('Both' in order_target) or ('Character' in order_target)) and orderb == None:
-          c1 = dict(data_u=[])
-          c2 = dict(data_c=[])
-          return render_template('special.html', wrong='Please match order_target and order_type!',**c1, **c2)
+          c1 = []
+          c2 = []
+          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)
         if ('User' in order_target) and orderu == None:
-          c1 = dict(data_u=[])
-          c2 = dict(data_c=[])
-          return render_template('special.html', wrong='Please match order_target and order_type!', **c1, **c2)
+          c1 = []
+          c2 = []
+          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)
         if orderu != None and order == 'All':
-          c1 = dict(data_u=[])
-          c2 = dict(data_c=[])
-          return render_template('special.html', wrong='Please match order_target and order_type!', **c1, **c2)
+          c1 = []
+          c2 = []
+          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)
         tmp = []
         for col in order_type:
           if col != None:
@@ -635,7 +633,7 @@ def special():
               context_1, context_2 = type_get(u_order='O.uid', c_order='cname', num_row=num_rows)
         else:
           context_1, context_2 = type_get(u_order='O.uid', c_order='cname', num_row=num_rows)
-        return render_template('special.html', **context_1, **context_2)
+        return render_template('special.html', data_u=context_1, data_c=context_2)
 
 
 def this_is_never_executed():
