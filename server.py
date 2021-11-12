@@ -586,24 +586,24 @@ def special():
       if submit == 'search':
         if orderu != None and orderb!= None:
           c1, c2 = [], []
-          return render_template('special.html', wrong='Please match order_target and order_type '
-                                                       'and only choose one order_type!', data_u=c1, data_c=c2)
+          return render_template('special.html', wrong='Please match order target and order_type '
+                                                       'and only choose one order type!', data_u=c1, data_c=c2)
         if orderu == None and orderb == None:
           c1 = []
           c2 = []
-          return render_template('special.html', wrong='Please at least choose one order_target', data_u=c1, data_c=c2)
+          return render_template('special.html', wrong='Please at least choose one order type', data_u=c1, data_c=c2)
         if (('Both' in order_target) or ('Character' in order_target)) and orderb == None:
           c1 = []
           c2 = []
-          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)
+          return render_template('special.html', wrong='Please match order target and order type!', data_u=c1, data_c=c2)
         '''if ('User' in order_target) and orderu == None:
           c1 = []
           c2 = []
-          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)'''
+          return render_template('special.html', wrong='Please match order target and order type!', data_u=c1, data_c=c2)'''
         if orderu != None and order == 'All':
           c1 = []
           c2 = []
-          return render_template('special.html', wrong='Please match order_target and order_type!', data_u=c1, data_c=c2)
+          return render_template('special.html', wrong='Please match order target and order type!', data_u=c1, data_c=c2)
         tmp = []
         for col in order_type:
           if col != None:
