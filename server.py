@@ -535,7 +535,7 @@ def special():
       cursor_u = g.conn.execute(sql_1)
       users = []
       for result in cursor_u:
-        users.append(result)  # can also be accessed using result
+        users.append(result)
       context_1 = users
       cursor_u.close()
       sql_2 = "SELECT cname, C.elements, C.character_rarity, COUNT(*) AS number_of_user_owing, " \
@@ -548,7 +548,7 @@ def special():
       cursor_c = g.conn.execute(sql_2)
       characters = []
       for result in cursor_c:
-        characters.append(result)  # can also be accessed using result
+        characters.append(result)
       context_2 = characters
       cursor_u.close()
       return context_1, context_2
@@ -586,7 +586,7 @@ def special():
       if submit == 'search':
         if orderu != None and orderb!= None:
           c1, c2 = [], []
-          return render_template('special.html', wrong='Please match order target and order_type '
+          return render_template('special.html', wrong='Please match order target and order type '
                                                        'and only choose one order type!', data_u=c1, data_c=c2)
         if orderu == None and orderb == None:
           c1 = []
